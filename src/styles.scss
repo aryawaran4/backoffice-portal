@@ -1,1 +1,143 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* Custom Material theme */
+$primary-palette: mat.m2-define-palette(mat.$m2-blue-palette, 700, 400, 900);
+$accent-palette: mat.m2-define-palette(mat.$m2-teal-palette, 600);
+$warn-palette: mat.m2-define-palette(mat.$m2-red-palette);
+
+$theme: mat.m2-define-light-theme((color: (primary: $primary-palette,
+        accent: $accent-palette,
+        warn: $warn-palette,
+      ),
+      typography: mat.m2-define-typography-config($font-family: "'Inter', sans-serif",
+      ),
+    ));
+
+@include mat.all-component-themes($theme);
+
+/* Design tokens */
+:root {
+  --color-primary: #302B63;
+  --color-primary-dark: #0F0C29;
+  --color-primary-light: #7B72B0;
+  --color-primary-surface: #F0F0FF;
+  --color-primary-bg: #E8E8FF;
+  --color-primary-gradient: linear-gradient(135deg, #0F0C29, #302B63, #24243e);
+
+  --color-bg: #F4F4FF;
+
+  --color-text: #0F172A;
+  --color-text-body: #374151;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-text-disabled: #9ca3af;
+  --color-text-dark: #1f2937;
+
+  --color-danger: #dc2626;
+  --color-danger-bg: #fee2e2;
+  --color-danger-border: #fecaca;
+
+  --color-warning: #d97706;
+  --color-warning-bg: #fef3c7;
+
+  --color-success: #059669;
+  --color-success-bg: #d1fae5;
+
+  --color-border: #f3f4f6;
+  --color-border-medium: #e5e7eb;
+
+  --color-scrollbar: #9990C8;
+}
+
+/* Global resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Material overrides */
+.mat-mdc-floating-label,
+.mdc-floating-label {
+  font-size: 14px !important;
+}
+
+.mat-mdc-select-value,
+.mat-mdc-option {
+  font-size: 14px !important;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  background: var(--color-primary-gradient) !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: var(--color-primary) !important;
+}
+
+.mat-mdc-form-field.mat-focused .mat-mdc-floating-label {
+  color: var(--color-primary) !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+/* Snackbar colors */
+.snack-warning {
+  --mdc-snackbar-container-color: var(--color-warning) !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+}
+
+.snack-danger {
+  --mdc-snackbar-container-color: var(--color-danger) !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+}
+
+/* Table header */
+.mat-mdc-header-cell {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: var(--color-text-body) !important;
+  background: var(--color-primary-surface) !important;
+}
+
+.mat-mdc-cell {
+  font-size: 14px !important;
+  color: var(--color-text-body);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
