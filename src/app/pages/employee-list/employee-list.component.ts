@@ -195,7 +195,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
           duration: 4000,
           panelClass: ['snack-danger'],
           horizontalPosition: 'right',
-          verticalPosition: 'top',
+          verticalPosition: 'bottom',
         },
       );
     });

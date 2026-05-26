@@ -68,7 +68,7 @@ export class EmployeeDetailComponent implements OnInit {
       this.snackBar.open(
         `${this.employee!.firstName} ${this.employee!.lastName} has been deleted.`,
         'Close',
-        { duration: 4000, panelClass: ['snack-danger'], horizontalPosition: 'right', verticalPosition: 'top' },
+        { duration: 4000, panelClass: ['snack-danger'], horizontalPosition: 'right', verticalPosition: 'bottom' },
       );
       this.router.navigate(['/employees']);
     });
