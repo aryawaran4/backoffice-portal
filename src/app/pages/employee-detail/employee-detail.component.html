@@ -1,0 +1,91 @@
+@if (employee) {
+  <div class="page-header">
+    <button mat-icon-button (click)="goBack()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <h2 class="page-title">Employee Detail</h2>
+      <p class="page-subtitle">
+        Viewing details for {{ employee.firstName }} {{ employee.lastName }}
+      </p>
+    </div>
+  </div>
+
+  <mat-card class="detail-card">
+    <mat-card-content>
+      <!-- Header Profile -->
+      <div class="profile-header">
+        <div class="avatar">{{ employee.firstName[0] }}{{ employee.lastName[0] }}</div>
+        <div class="profile-info">
+          <h3 class="profile-name">{{ employee.firstName }} {{ employee.lastName }}</h3>
+          <p class="profile-username">&#64;{{ employee.username }}</p>
+          <span class="status-chip" [class.active]="employee.status === 'Active'">
+            {{ employee.status }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Details Grid -->
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">email</mat-icon>
+            Email
+          </div>
+          <div class="detail-value">{{ employee.email }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">cake</mat-icon>
+            Birth Date
+          </div>
+          <div class="detail-value">{{ employee.birthDate | date: 'dd MMMM yyyy' }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">payments</mat-icon>
+            Basic Salary
+          </div>
+          <div class="detail-value salary">{{ formatSalary(employee.basicSalary) }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">group</mat-icon>
+            Group
+          </div>
+          <div class="detail-value">{{ employee.group }}</div>
+        </div>
+
+        <div class="detail-item full-span">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">notes</mat-icon>
+            Description
+          </div>
+          <div class="detail-value">{{ employee.description }}</div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="card-actions">
+      <div class="action-right">
+        <button mat-stroked-button class="edit-btn" (click)="onEdit()">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
+        <button mat-raised-button color="warn" (click)="onDelete()">
+          <mat-icon>delete</mat-icon>
+          Delete
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+} @else {
+  <div class="not-found">
+    <mat-icon>person_off</mat-icon>
+    <h3>Employee not found</h3>
+    <button mat-raised-button color="primary" (click)="goBack()">Back to List</button>
+  </div>
+}

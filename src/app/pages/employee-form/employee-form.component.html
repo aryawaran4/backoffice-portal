@@ -1,0 +1,151 @@
+<mat-card class="form-card">
+  <mat-card-content>
+    <div class="card-header">
+      <button mat-icon-button (click)="cancel()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div>
+        <h2 class="page-title">{{ isEditMode ? 'Edit Employee' : 'Add Employee' }}</h2>
+        <p class="page-subtitle">
+          {{
+            isEditMode
+              ? 'Update the details for ' +
+                existingEmployee?.firstName +
+                ' ' +
+                existingEmployee?.lastName
+              : 'Fill in the details below to add a new employee'
+          }}
+        </p>
+      </div>
+    </div>
+
+    <mat-divider class="header-divider" />
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h3 class="section-title">Personal Information</h3>
+
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput formControlName="username" />
+          @if (hasError('username', 'required')) {
+            <mat-error>Username is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <mat-icon matPrefix>email</mat-icon>
+          <input matInput formControlName="email" type="email" />
+          @if (hasError('email', 'required')) {
+            <mat-error>Email is required</mat-error>
+          } @else if (hasError('email', 'email')) {
+            <mat-error>Please enter a valid email address</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" />
+          @if (hasError('firstName', 'required')) {
+            <mat-error>First name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" />
+          @if (hasError('lastName', 'required')) {
+            <mat-error>Last name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Birth Date</mat-label>
+          <mat-icon matPrefix>cake</mat-icon>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="birthDate"
+            [max]="today"
+            readonly
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker" />
+          <mat-datepicker #picker />
+          @if (hasError('birthDate', 'required')) {
+            <mat-error>Birth date is required</mat-error>
+          } @else if (hasError('birthDate', 'matDatepickerMax')) {
+            <mat-error>Birth date cannot be in the future</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Basic Salary (IDR)</mat-label>
+          <mat-icon matPrefix>payments</mat-icon>
+          <input matInput formControlName="basicSalary" type="number" min="0" />
+          @if (hasError('basicSalary', 'required')) {
+            <mat-error>Basic salary is required</mat-error>
+          } @else if (hasError('basicSalary', 'min')) {
+            <mat-error>Salary must be a positive number</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <h3 class="section-title">Employment Details</h3>
+
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-icon matPrefix>bolt</mat-icon>
+          <mat-select formControlName="status">
+            <mat-option value="Active">Active</mat-option>
+            <mat-option value="Inactive">Inactive</mat-option>
+          </mat-select>
+          @if (hasError('status', 'required')) {
+            <mat-error>Status is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Group</mat-label>
+          <mat-icon matPrefix>group</mat-icon>
+          <mat-select formControlName="group">
+            <div class="group-search-wrapper">
+              <input
+                class="group-search-input"
+                placeholder="Search group..."
+                (input)="filterGroups($event)"
+                (click)="$event.stopPropagation()"
+              />
+            </div>
+            @for (g of filteredGroups(); track g) {
+              <mat-option [value]="g">{{ g }}</mat-option>
+            }
+            @if (filteredGroups().length === 0) {
+              <mat-option disabled>No groups found</mat-option>
+            }
+          </mat-select>
+          @if (hasError('group', 'required')) {
+            <mat-error>Group is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width description-field">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="3"></textarea>
+        @if (hasError('description', 'required')) {
+          <mat-error>Description is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-stroked-button type="button" (click)="cancel()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">
+          {{ isEditMode ? 'Update Employee' : 'Save Employee' }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
