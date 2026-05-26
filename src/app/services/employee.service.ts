@@ -93,6 +93,18 @@ export class EmployeeService {
     return this._employees().find(e => e.id === id);
   }
 
+  isUsernameTaken(username: string, excludeId?: number): boolean {
+    return this._employees().some(
+      e => e.username === username && e.id !== excludeId,
+    );
+  }
+
+  isEmailTaken(email: string, excludeId?: number): boolean {
+    return this._employees().some(
+      e => e.email === email && e.id !== excludeId,
+    );
+  }
+
   add(employee: Omit<Employee, 'id'>): void {
     const nextId = Math.max(...this._employees().map(e => e.id)) + 1;
     this._employees.update(list => [...list, { id: nextId, ...employee }]);

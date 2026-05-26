@@ -29,8 +29,8 @@
           <mat-label>Username</mat-label>
           <mat-icon matPrefix>person</mat-icon>
           <input matInput formControlName="username" />
-          @if (hasError('username', 'required')) {
-            <mat-error>Username is required</mat-error>
+          @if (getError('username')) {
+            <mat-error>{{ getError('username') }}</mat-error>
           }
         </mat-form-field>
 
@@ -38,26 +38,24 @@
           <mat-label>Email</mat-label>
           <mat-icon matPrefix>email</mat-icon>
           <input matInput formControlName="email" type="email" />
-          @if (hasError('email', 'required')) {
-            <mat-error>Email is required</mat-error>
-          } @else if (hasError('email', 'email')) {
-            <mat-error>Please enter a valid email address</mat-error>
+          @if (getError('email')) {
+            <mat-error>{{ getError('email') }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
           <input matInput formControlName="firstName" />
-          @if (hasError('firstName', 'required')) {
-            <mat-error>First name is required</mat-error>
+          @if (getError('firstName')) {
+            <mat-error>{{ getError('firstName') }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
           <input matInput formControlName="lastName" />
-          @if (hasError('lastName', 'required')) {
-            <mat-error>Last name is required</mat-error>
+          @if (getError('lastName')) {
+            <mat-error>{{ getError('lastName') }}</mat-error>
           }
         </mat-form-field>
 
@@ -73,10 +71,8 @@
           />
           <mat-datepicker-toggle matSuffix [for]="picker" />
           <mat-datepicker #picker />
-          @if (hasError('birthDate', 'required')) {
-            <mat-error>Birth date is required</mat-error>
-          } @else if (hasError('birthDate', 'matDatepickerMax')) {
-            <mat-error>Birth date cannot be in the future</mat-error>
+          @if (getError('birthDate')) {
+            <mat-error>{{ getError('birthDate') }}</mat-error>
           }
         </mat-form-field>
 
@@ -84,10 +80,8 @@
           <mat-label>Basic Salary (IDR)</mat-label>
           <mat-icon matPrefix>payments</mat-icon>
           <input matInput formControlName="basicSalary" type="number" min="0" />
-          @if (hasError('basicSalary', 'required')) {
-            <mat-error>Basic salary is required</mat-error>
-          } @else if (hasError('basicSalary', 'min')) {
-            <mat-error>Salary must be a positive number</mat-error>
+          @if (getError('basicSalary')) {
+            <mat-error>{{ getError('basicSalary') }}</mat-error>
           }
         </mat-form-field>
       </div>
@@ -102,8 +96,8 @@
             <mat-option value="Active">Active</mat-option>
             <mat-option value="Inactive">Inactive</mat-option>
           </mat-select>
-          @if (hasError('status', 'required')) {
-            <mat-error>Status is required</mat-error>
+          @if (getError('status')) {
+            <mat-error>{{ getError('status') }}</mat-error>
           }
         </mat-form-field>
 
@@ -126,8 +120,8 @@
               <mat-option disabled>No groups found</mat-option>
             }
           </mat-select>
-          @if (hasError('group', 'required')) {
-            <mat-error>Group is required</mat-error>
+          @if (getError('group')) {
+            <mat-error>{{ getError('group') }}</mat-error>
           }
         </mat-form-field>
       </div>
@@ -135,8 +129,8 @@
       <mat-form-field appearance="outline" class="full-width description-field">
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description" rows="3"></textarea>
-        @if (hasError('description', 'required')) {
-          <mat-error>Description is required</mat-error>
+        @if (getError('description')) {
+          <mat-error>{{ getError('description') }}</mat-error>
         }
       </mat-form-field>
 

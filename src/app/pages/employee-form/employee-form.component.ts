@@ -72,9 +72,23 @@ export class EmployeeFormComponent implements OnInit {
     }
   }
 
-  hasError(field: string, error: string): boolean {
+  private errorMessages: Record<string, Record<string, string>> = {
+    username:    { required: 'Username is required', duplicate: 'Username is already taken' },
+    email:       { required: 'Email is required', email: 'Please enter a valid email address', duplicate: 'Email is already in use' },
+    firstName:   { required: 'First name is required' },
+    lastName:    { required: 'Last name is required' },
+    birthDate:   { required: 'Birth date is required', matDatepickerMax: 'Birth date cannot be in the future' },
+    basicSalary: { required: 'Basic salary is required', min: 'Salary must be a positive number' },
+    status:      { required: 'Status is required' },
+    group:       { required: 'Group is required' },
+    description: { required: 'Description is required' },
+  };
+
+  getError(field: string): string {
     const ctrl = this.form.get(field);
-    return !!(ctrl?.hasError(error) && ctrl?.touched);
+    if (!ctrl?.touched || !ctrl.errors) return '';
+    const msgs = this.errorMessages[field] ?? {};
+    return Object.keys(ctrl.errors).map(k => msgs[k]).find(Boolean) ?? '';
   }
 
   filterGroups(event: Event): void {
@@ -89,6 +103,15 @@ export class EmployeeFormComponent implements OnInit {
     }
 
     const val = this.form.value;
+    const excludeId = this.existingEmployee?.id;
+
+    const usernameTaken = this.employeeService.isUsernameTaken(val.username!, excludeId);
+    const emailTaken = this.employeeService.isEmailTaken(val.email!, excludeId);
+
+    if (usernameTaken) this.form.get('username')?.setErrors({ duplicate: true });
+    if (emailTaken) this.form.get('email')?.setErrors({ duplicate: true });
+    if (usernameTaken || emailTaken) return;
+
     const data = {
       username: val.username!,
       firstName: val.firstName!,
@@ -107,6 +130,7 @@ export class EmployeeFormComponent implements OnInit {
       this.employeeService.add(data);
     }
 
+    this.form.markAsPristine();
     this.router.navigate(['/employees']);
   }
 
