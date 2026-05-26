@@ -1,0 +1,18 @@
+<div class="app-shell">
+  <mat-toolbar class="topbar">
+    <div class="topbar-brand">
+      <mat-icon class="brand-icon">people</mat-icon>
+      <span class="brand-name">Employee Portal</span>
+    </div>
+    <div class="topbar-actions">
+      <span class="user-label">admin</span>
+      <button mat-icon-button (click)="logout()" title="Logout">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>

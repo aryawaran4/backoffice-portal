@@ -1,0 +1,17 @@
+<div class="confirm-dialog">
+  <h3>{{ data.title ?? 'Delete Employee' }}</h3>
+  <mat-dialog-content>
+    @if (data.message) {
+      <p>{{ data.message }}</p>
+    } @else {
+      <p>Are you sure you want to delete <strong>{{ data.name }}</strong>?</p>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-stroked-button [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">
+      <mat-icon>{{ data.confirmIcon ?? 'delete' }}</mat-icon>
+      {{ data.confirmLabel ?? 'Delete' }}
+    </button>
+  </mat-dialog-actions>
+</div>
